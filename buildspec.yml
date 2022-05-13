@@ -22,9 +22,6 @@ phases:
       - docker push $REPOSITORY_URI:latest
       - docker push $REPOSITORY_URI:$IMAGE_TAG
       - echo Writing image definitions file...
-      - printf '[{"name":"CONTAINER_NAME","imageUri":"IMAGE_URI"}]' > imagedefinitions.json
-      - sed -i -e "s|CONTAINER_NAME|$ECR_reponame|g" imagedefinitions.json
-      - sed -i -e "s|IMAGE_URI|$REPOSITORY_URI:$IMAGE_TAG|g" imagedefinitions.json
-      - cat imagedefinitions.json
+      - printf '[{"name":"%s","imageUri":"%s"}]' $ECR_reponame $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
 artifacts:
     files: imagedefinitions.json
